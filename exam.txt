@@ -1,0 +1,74 @@
+3. Filezilla
+	sudo -i
+	yum install httpd
+	service httpd start
+	yum install php php-mysql
+	service httpd restart
+	sudo chmod 777 /var/www/html
+	
+
+4. RDS
+	Parameter Group (Edit)
+		character_set_client,connection,database,results,server - utf8
+
+	VPC -> Action -> Edit VPC Settings -> click on (Enable DNS hostnames) ->Save
+
+	VPC -> Security Group
+		Inbound: http,https,shs,mysql/arora,mssql,custom tcp (8000-9000),all trafic -> (IPv4)
+		outbound: all trafic -> (IPv4)
+		
+5. Direct Connect
+	sudo -i
+	mysql -u (username:master) -p -h (end point) -P 3306
+	(yum intall mysql) 
+	use (database name);
+	select * from (table name);
+
+6. Putty
+	sudo -i
+	(yum install mysql)
+	yum install httpd
+	service httpd start
+	yum install php php-mysql
+	service httpd restart
+	cd /var/www/html
+	vim (filename.php)
+	-> Paste the code
+		Esc:wq
+
+
+-> Database code
+
+<!DOCTYPE html>
+<html>
+<body>
+<?php
+$servername = "database-2.cb5thfbdbcle.ap-south-1.rds.amazonaws.com";
+$username = "master";
+$password = "master08";
+$dbname = "database08";
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$sql = "SELECT * from login";
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+    // output data of each row
+    while($row = $result->fetch_assoc()) {
+        echo "<br> Userid: ". $row["userid"]. " - Password: ". $row["pwd"]. "<br>";
+    }
+} else {
+    echo "0 results";
+}
+$conn->close();
+?>
+</body>
+</html>
+
+
+	
+	
+	
