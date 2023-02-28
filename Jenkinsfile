@@ -1,1 +1,35 @@
-git branch: 'main', credentialsId: '75d26d0d-5a48-4a20-97b6-9bed0fc7a57b', url: 'https://github.com/ashokmahala/ss.git'
+pipeline {
+    agent any
+
+    stages 
+    {
+        stage('Build') 
+        {
+            steps 
+            {
+                echo 'THIS IS TO BUILD AN APP'
+            }
+        }
+        stage('Test') 
+        {
+            steps 
+            {
+                echo 'THIS IS TO TEST AN APP'
+            }
+        }
+        stage('Deploy') 
+        {
+            steps 
+            {
+                echo 'THIS IS TO DEPLOY AN APP'
+            }
+        }
+    }
+    post
+  {
+    always
+    {
+      emailext body: 'Summary', replyTo: 'divyagupta0642@gmail.com', subject: 'Pipeline-Notify', to: 'divyagupta0642@gmail.com'
+    }
+  }
+}
